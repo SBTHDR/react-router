@@ -2,16 +2,34 @@ import React from 'react'
 import { useState } from 'react'
 
 export default function Create() {
+
+    const [users, setUsers] = useState([
+        {
+            "id": 1,
+            "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+            "description": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        },
+        {
+            "id": 2,
+            "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+            "description": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        },
+    ])
+
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [item, setItem] = useState(null)
+    const [id, setId] = useState(null)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const blog = { title, description, item }
+        const userInput = { title, description, id }
 
-        console.log(blog)
+        setTitle('')
+        setDescription('')
+
+        setUsers([ ...users, userInput])
     }
+    
   return (
     <div>
         <h2 className='text-lg mt-3'>Create Input filed</h2>
@@ -29,7 +47,7 @@ export default function Create() {
 
                 <div className='w-1/3 flex p-4 items-center'>
                     <label htmlFor="">Select</label>
-                    <select className='bg-transparent w-full p-3 border-2 border-indigo-500 rounded-md ml-2 cursor-pointer' value={item} onChange={(e) => setItem(e.target.value)}>
+                    <select className='bg-transparent w-full p-3 border-2 border-indigo-500 rounded-md ml-2 cursor-pointer' value={id} onChange={(e) => setId(e.target.value)}>
                         <option value="">Select Item</option>
                         <option value="1">Item one</option>
                         <option value="2">Item two</option>
@@ -39,12 +57,19 @@ export default function Create() {
 
             <button className='bg-indigo-500 text-white px-4 py-3 rounded-md'>Submit</button>
         </form>
-        <p className='text-xl mt-3'>Output:</p>
-        <div className='text-2xl border mt-3 p-2'>
-            <p className=''>{title}</p>
-            <p className=''>{description}</p>
-            <p className=''>{item}</p>
-        </div>
+        
+        <h2 className='text-2xl mt-3 font-bold'>User List:</h2>
+
+        <ul className='bg-white rounded-md p-5 mt-3 border border-indigo-500'>
+            { users.map((user) => { 
+                return <div key={user.id} className='text-xl mb-2 border border-indigo-500 rounded-md p-3'>
+                        <li><span className='text-indigo-500'>User ID:</span> {user.id}</li>
+                        <li><span className='text-indigo-500'>Title:</span> {user.title}</li>
+                        <li><span className='text-indigo-500'>Description:</span> {user.description}</li>
+                    </div>
+            }) }
+        </ul>
+
     </div>
   )
 }
